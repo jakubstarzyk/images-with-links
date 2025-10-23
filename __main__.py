@@ -1,4 +1,4 @@
-import os, sys, string, weasyprint
+import os, sys, string, re, weasyprint
 
 h = string.Template(
 """\
@@ -26,6 +26,6 @@ size: ${width}px ${height}px;
 if __name__ == "__main__":
     with open(sys.argv[1]) as data:
         for line in data:
-            v = dict(zip(["image", "width", "height", "link"], line.rstrip().split("\t")))
+            v = dict(zip(["image", "width", "height", "link"], re.split("\t|\n", line)))
             v["image"] = os.path.realpath(v["image"])
             weasyprint.HTML(string=h.substitute(v)).write_pdf(v["image"] + ".pdf")
