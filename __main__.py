@@ -26,6 +26,6 @@ size: ${width}px ${height}px;
 if __name__ == "__main__":
     with open(sys.argv[1]) as data:
         for line in data:
-            v = dict(zip(["image", "width", "height", "link"], re.split("\t|\n", line)))
-            v["image"] = os.path.realpath(v["image"])
-            weasyprint.HTML(string=h.substitute(v)).write_pdf(v["image"] + ".pdf")
+            v = re.split("\t|\n", line)
+            v[3] = os.path.realpath(v[3])
+            weasyprint.HTML(string=h.substitute(width=v[0], height=v[1], link=v[2], image=v[3])).write_pdf(v[3] + ".pdf")
